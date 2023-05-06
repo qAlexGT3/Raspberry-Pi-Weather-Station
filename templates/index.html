@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Station</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setInterval(function() {
+                $.getJSON('/update', function(data) {
+                    $('#temperature').text(data.temperature.toFixed(2));
+                    $('#humidity').text(data.humidity.toFixed(2));
+                });
+            }, 1000);
+        });
+    </script>
+    <style>
+        body {
+            background-color: #f1f1f1;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            margin-top: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .card-header {
+            background-color: #343a40;
+            border-radius: 10px 10px 0 0;
+            color: #fff;
+        }
+
+        h2, h4 {
+            color: #343a40;
+        }
+
+        #temperature {
+            font-size: 3rem;
+            color: #dc3545;
+        }
+
+        #humidity {
+            font-size: 3rem;
+            color: #007bff;
+        }
+
+        @media (max-width: 576px) {
+            #temperature, #humidity {
+                font-size: 2rem;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #f1f1f1;
+            }
+
+            .card {
+                background-color: #1a1a1a;
+                color: #f1f1f1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3>Weather Station</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <h4>Temperature</h4>
+                            <h2><span id="temperature">Loading...</span> &deg;C</h2>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Humidity</h4>
+                            <h2><span id="humidity">Loading...</span>%</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
